@@ -1,0 +1,28 @@
+import "zmodel/app"
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider      = "prisma-client-js"
+    previewFeatures = ["typedSql"]
+    binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+}
+
+plugin trpc {
+    provider = "@zenstackhq/trpc"
+    output   = "./generated"
+}
+
+plugin openapi {
+    provider = "@zenstackhq/openapi"
+    output = "KTPM.json"
+    title = "KTPM API"
+    version = "1.0.0"
+    flavor = "rpc"
+}
+
+
+

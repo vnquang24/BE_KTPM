@@ -1,0 +1,44 @@
+services:
+  postgres_ktpm:
+    image: postgres:15
+    restart: always
+    container_name: postgres_ktpm # Thêm tên container cụ thể
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5434:5432"
+    env_file: .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - postgres_data_ktpm:/var/lib/postgresql/data # Đổi tên volume
+    command: postgres -c listen_addresses='*'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis_ktpm:
+    # Đổi tên container
+    image: redis
+    container_name: redis_ktpm # Thêm tên container cụ thể
+    restart: always
+    ports:
+      - 6380:6379 # Đổi port mappin
+  # app:
+  #   build: .
+  #   ports:
+  #     - 3000:3000
+  #   env_file: .env
+  #   depends_on:
+  #     - postgres
+  #     - redis
+
+
+volumes:
+  postgres_data_ktpm:
