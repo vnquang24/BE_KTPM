@@ -25,7 +25,6 @@ class RegisterDto {
 exports.RegisterDto = RegisterDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 'admin@gmail.com' }),
-    (0, class_validator_1.IsEmail)({}, { message: 'Email không hợp lệ' }),
     (0, class_validator_1.IsNotEmpty)({ message: 'Username là bắt buộc' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "username", void 0);

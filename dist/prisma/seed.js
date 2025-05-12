@@ -28,7 +28,9 @@ function getRandomIndices(max, count) {
 async function main() {
     await prisma.review.deleteMany();
     await prisma.booking.deleteMany();
+    await prisma.maintenanceSchedule.deleteMany();
     await prisma.subField.deleteMany();
+    await prisma.openingHours.deleteMany();
     await prisma.field.deleteMany();
     await prisma.owner.deleteMany();
     await prisma.customUser.deleteMany();
@@ -105,16 +107,16 @@ async function main() {
     console.log('Đã tạo các tài khoản');
     const ownerRankings = ['Gold', 'Silver', 'Platinum', 'Diamond', 'Standard'];
     const ownerDescriptions = [
-        'Chủ sân hạng Gold với nhiều đánh giá tốt',
-        'Chủ sân hạng Silver với giá cả hợp lý',
-        'Chủ sân tennis cao cấp',
-        'Chủ sân bóng đá chuyên nghiệp',
-        'Chủ sân quận 7',
-        'Chủ sân thể thao đa năng',
-        'Chủ sân hạng A',
-        'Chủ sân hạng B',
-        'Chủ sân mới khai trương',
-        'Chủ sân chuyên nghiệp'
+        'Chủ sân pickleball hạng Gold với nhiều đánh giá tốt',
+        'Chủ sân pickleball hạng Silver với giá cả hợp lý',
+        'Chủ chuỗi sân pickleball cao cấp tại Hà Nội',
+        'Chủ sân pickleball chuyên nghiệp với HLV quốc tế',
+        'Chủ sân pickleball Quận Cầu Giấy',
+        'Chủ sân pickleball đạt chuẩn quốc tế',
+        'Chủ sân pickleball hạng A',
+        'Chủ sân pickleball hạng B',
+        'Chủ sân pickleball mới khai trương',
+        'Chủ sân pickleball chuyên nghiệp với nhiều năm kinh nghiệm'
     ];
     const owners = [];
     for (let i = 0; i < ownerAccounts.length; i++) {
@@ -129,16 +131,16 @@ async function main() {
     }
     console.log('Đã tạo dữ liệu chủ sân');
     const customerDescriptions = [
-        'Khách hàng thường xuyên đặt sân bóng đá',
+        'Khách hàng thường xuyên đặt sân pickleball',
         'Khách hàng mới, chưa có lịch sử đặt sân',
         'Khách hàng VIP, thường đặt sân cao cấp',
-        'Đại diện đội bóng, thường đặt sân cho cả đội',
+        'Đại diện câu lạc bộ pickleball, thường đặt sân cho cả đội',
         'Khách hàng ưu tiên, được giảm giá',
         'Khách hàng doanh nghiệp, đặt sân hàng tuần',
         'Khách hàng sinh viên, đặt sân giá rẻ',
-        'Khách hàng hội thể thao',
-        'Khách hàng CLB bóng đá',
-        'Khách hàng tổ chức giải đấu'
+        'Khách hàng câu lạc bộ pickleball Hà Nội',
+        'Khách hàng đội tuyển pickleball',
+        'Khách hàng tổ chức giải đấu pickleball'
     ];
     const customers = [];
     for (let i = 0; i < customerAccounts.length; i++) {
@@ -153,38 +155,38 @@ async function main() {
     console.log('Đã tạo dữ liệu khách hàng');
     const fieldRankings = ['Premium', 'Standard', 'Economy', 'Platinum', 'Diamond', 'Gold', 'Silver'];
     const fieldLocations = [
-        'Số 123 Đường Nguyễn Văn Linh, Quận 7, TP.HCM',
-        'Số 456 Đường Lê Văn Lương, Quận 7, TP.HCM',
-        'Số 789 Đường Phạm Văn Đồng, Quận Thủ Đức, TP.HCM',
-        'Số 101 Đường Lý Thường Kiệt, Quận 10, TP.HCM',
-        'Số 555 Đường Trần Hưng Đạo, Quận 1, TP.HCM',
-        'Số 25 Đường Trường Sa, Quận Bình Thạnh, TP.HCM',
-        'Số 76 Đường Phạm Văn Bạch, Quận Tân Bình, TP.HCM',
-        'Số 234 Đường Phan Huy Ích, Quận Gò Vấp, TP.HCM',
-        'Số 45 Đường Đinh Tiên Hoàng, Quận 1, TP.HCM',
-        'Số 369 Đường Cộng Hòa, Quận Tân Bình, TP.HCM',
-        'Số 111 Đường Bình Quới, Quận Thủ Đức, TP.HCM',
-        'Số 271 Đường An Dương Vương, Quận 5, TP.HCM',
-        'Số 53 Đường Nguyễn Thị Minh Khai, Quận 1, TP.HCM',
-        'Số 97 Đường Nguyễn Hữu Cảnh, Quận Bình Thạnh, TP.HCM',
-        'Số 156 Đường Nguyễn Văn Thủ, Quận 1, TP.HCM'
+        'Số 123 Đường Trần Duy Hưng, Quận Cầu Giấy, Hà Nội',
+        'Số 456 Đường Nguyễn Chí Thanh, Quận Đống Đa, Hà Nội',
+        'Số 789 Đường Láng, Quận Đống Đa, Hà Nội',
+        'Số 101 Đường Trường Chinh, Quận Thanh Xuân, Hà Nội',
+        'Số 555 Đường Hoàng Quốc Việt, Quận Bắc Từ Liêm, Hà Nội',
+        'Số 25 Đường Phạm Hùng, Quận Nam Từ Liêm, Hà Nội',
+        'Số 76 Đường Lê Đức Thọ, Quận Nam Từ Liêm, Hà Nội',
+        'Số 234 Đường Xuân Thủy, Quận Cầu Giấy, Hà Nội',
+        'Số 45 Đường Hoàng Cầu, Quận Đống Đa, Hà Nội',
+        'Số 369 Đường Đê La Thành, Quận Đống Đa, Hà Nội',
+        'Số 111 Đường Tây Sơn, Quận Đống Đa, Hà Nội',
+        'Số 271 Đường Khâm Thiên, Quận Đống Đa, Hà Nội',
+        'Số 53 Đường Nguyễn Trãi, Quận Thanh Xuân, Hà Nội',
+        'Số 97 Đường Giải Phóng, Quận Hai Bà Trưng, Hà Nội',
+        'Số 156 Đường Minh Khai, Quận Hai Bà Trưng, Hà Nội'
     ];
     const fieldDescriptions = [
-        'Sân bóng đá cao cấp với đầy đủ tiện nghi, phòng thay đồ rộng rãi, có bãi đậu xe',
-        'Sân bóng đá tiêu chuẩn với giá cả phải chăng, phù hợp cho các đội bóng nghiệp dư',
-        'Sân bóng đá chất lượng cao tại khu vực Thủ Đức, có hệ thống chiếu sáng hiện đại',
-        'Sân bóng đá giá rẻ, phù hợp cho sinh viên và học sinh',
-        'Sân tennis cao cấp với mặt sân đạt chuẩn quốc tế',
-        'Sân bóng đá rộng rãi, phục vụ các giải đấu cấp quận',
-        'Sân bóng đá và bóng rổ tổng hợp, phù hợp nhiều môn thể thao',
-        'Sân thể thao đa năng, có các dịch vụ đi kèm như nhà hàng, khu giải khát',
-        'Sân bóng đá trong nhà, có hệ thống điều hòa, chỉ nhận khách đặt trước',
-        'Sân bóng đá mới xây, cỏ nhân tạo tiêu chuẩn FIFA',
-        'Sân tennis tiêu chuẩn, có huấn luyện viên chuyên nghiệp',
-        'Sân thể thao kinh doanh nhiều năm, có khách hàng trung thành',
-        'Sân bóng đá cho trẻ em, có lớp dạy bóng đá cơ bản',
-        'Sân cầu lông chuyên nghiệp, đạt tiêu chuẩn thi đấu',
-        'Sân bóng rổ ngoài trời, phục vụ các đội từ phong trào đến chuyên nghiệp'
+        'Sân pickleball cao cấp với đầy đủ tiện nghi, phòng thay đồ rộng rãi, có bãi đậu xe',
+        'Sân pickleball tiêu chuẩn với giá cả phải chăng, phù hợp cho người mới chơi',
+        'Sân pickleball chất lượng cao tại khu vực Cầu Giấy, có hệ thống chiếu sáng hiện đại',
+        'Sân pickleball giá rẻ, phù hợp cho sinh viên và học sinh',
+        'Sân pickleball trong nhà, đạt chuẩn quốc tế, có điều hòa',
+        'Sân pickleball rộng rãi, phục vụ các giải đấu cấp quận',
+        'Sân pickleball và tennis tổng hợp, phù hợp nhiều đối tượng',
+        'Sân pickleball đa năng, có các dịch vụ đi kèm như nhà hàng, khu giải khát',
+        'Sân pickleball trong nhà, có hệ thống điều hòa, chỉ nhận khách đặt trước',
+        'Sân pickleball mới xây, mặt sân cao su đặc biệt chống trơn trượt',
+        'Sân pickleball tiêu chuẩn, có huấn luyện viên chuyên nghiệp',
+        'Sân pickleball kinh doanh nhiều năm, có khách hàng trung thành',
+        'Sân pickleball cho người mới, có lớp dạy kỹ thuật cơ bản',
+        'Sân pickleball chuyên nghiệp, đạt tiêu chuẩn thi đấu',
+        'Sân pickleball ngoài trời, phục vụ các đội từ phong trào đến chuyên nghiệp'
     ];
     const numberOfFields = Math.floor(Math.random() * 6) + 20;
     const fields = [];
@@ -219,38 +221,38 @@ async function main() {
     const prices = [200000, 250000, 300000, 350000, 400000, 450000, 500000, 550000, 600000];
     const statuses = ['AVAILABLE', 'MAINTENANCE', 'CLOSED', 'RESERVED'];
     const subfieldDescriptions = [
-        'Sân 5 người, cỏ nhân tạo cao cấp, có hệ thống làm mát',
-        'Sân 7 người, cỏ nhân tạo cao cấp, có hệ thống làm mát',
-        'Sân 11 người, cỏ nhân tạo cao cấp, đang bảo trì',
-        'Sân 5 người, cỏ nhân tạo tiêu chuẩn',
-        'Sân 7 người, cỏ nhân tạo tiêu chuẩn',
-        'Sân 7 người, cỏ nhân tạo cao cấp, có hệ thống chiếu sáng hiện đại',
-        'Sân 5 người, giá rẻ dành cho sinh viên',
-        'Sân tennis đơn, mặt sân cao cấp',
-        'Sân tennis đôi, mặt sân cao cấp',
-        'Sân cầu lông đơn',
-        'Sân cầu lông đôi',
-        'Sân tập luyện cho trẻ em',
-        'Sân thi đấu chuyên nghiệp',
-        'Sân bóng rổ ngoài trời',
-        'Sân bóng rổ trong nhà'
+        'Sân pickleball đơn, mặt sân cao cấp, có hệ thống làm mát',
+        'Sân pickleball đôi, mặt sân cao cấp, có hệ thống làm mát',
+        'Sân pickleball tournament, đạt chuẩn quốc tế, đang bảo trì',
+        'Sân pickleball đơn, mặt sân tiêu chuẩn',
+        'Sân pickleball đôi, mặt sân tiêu chuẩn',
+        'Sân pickleball đôi, mặt sân cao cấp, có hệ thống chiếu sáng hiện đại',
+        'Sân pickleball giá rẻ dành cho sinh viên',
+        'Sân pickleball đơn, mặt sân cao cấp',
+        'Sân pickleball đôi, mặt sân cao cấp',
+        'Sân pickleball đơn, dành cho người mới',
+        'Sân pickleball đôi, dành cho người có kinh nghiệm',
+        'Sân pickleball tập luyện cho trẻ em',
+        'Sân pickleball thi đấu chuyên nghiệp',
+        'Sân pickleball ngoài trời',
+        'Sân pickleball trong nhà'
     ];
     const subfieldNames = [
-        'Sân số 1 - Khu A',
-        'Sân số 2 - Khu A',
-        'Sân số 3 - Khu A',
-        'Sân số 1 - Khu B',
-        'Sân số 2 - Khu B',
-        'Sân số 1 - Khu C',
-        'Sân sinh viên 1',
-        'Sân tennis 1',
-        'Sân tennis 2',
-        'Sân trong nhà 1',
-        'Sân ngoài trời 1',
-        'Sân chuyên nghiệp',
-        'Sân giải đấu',
-        'Sân tập luyện',
-        'Sân thế dục'
+        'Sân pickleball số 1 - Khu A',
+        'Sân pickleball số 2 - Khu A',
+        'Sân pickleball số 3 - Khu A',
+        'Sân pickleball số 1 - Khu B',
+        'Sân pickleball số 2 - Khu B',
+        'Sân pickleball số 1 - Khu C',
+        'Sân pickleball sinh viên 1',
+        'Sân pickleball đơn 1',
+        'Sân pickleball đôi 1',
+        'Sân pickleball trong nhà 1',
+        'Sân pickleball ngoài trời 1',
+        'Sân pickleball chuyên nghiệp',
+        'Sân pickleball giải đấu',
+        'Sân pickleball tập luyện',
+        'Sân pickleball đa năng'
     ];
     const subfields = [];
     for (const field of fields) {
@@ -316,14 +318,14 @@ async function main() {
     console.log('Đã tạo dữ liệu thời gian mở cửa');
     const maintenanceStatuses = ['scheduled', 'in-progress', 'completed', 'cancelled'];
     const maintenanceReasons = [
-        'Bảo trì định kỳ',
-        'Sửa chữa mặt sân',
-        'Thay thế thiết bị',
-        'Nâng cấp hệ thống đèn',
+        'Bảo trì định kỳ mặt sân pickleball',
+        'Sửa chữa mặt sân sau giải đấu',
+        'Thay thế lưới và dụng cụ',
+        'Nâng cấp hệ thống đèn LED',
         'Cải tạo phòng thay đồ',
-        'Sơn vạch kẻ sân',
-        'Dọn dẹp lớn',
-        'Kiểm tra an toàn'
+        'Sơn vạch kẻ sân pickleball',
+        'Vệ sinh và bảo dưỡng lớn',
+        'Kiểm tra an toàn và tiêu chuẩn thi đấu'
     ];
     const maintenanceSubfields = subfields.filter(sf => sf.status === 'MAINTENANCE');
     for (const subfield of maintenanceSubfields) {
@@ -389,19 +391,19 @@ async function main() {
     const bookingStatuses = ['pending', 'paid', 'cancel'];
     const paymentMethods = ['banking', 'cash', 'momo', 'zalo pay', 'credit card'];
     const bookingDescriptions = [
-        'Đặt sân cho đội bóng công ty',
-        'Đặt sân cho nhóm bạn',
-        'Đặt sân cho nhóm VIP',
+        'Đặt sân pickleball cho đội công ty',
+        'Đặt sân pickleball cho nhóm bạn',
+        'Đặt sân pickleball cho nhóm VIP',
         'Đặt sân nhưng hủy vì lý do cá nhân',
-        'Đặt sân tennis cho giải đấu công ty',
-        'Đặt sân tennis đôi cho giải đấu',
-        'Đặt sân cho đội bóng sinh viên',
-        'Đặt sân tập huấn đội bóng',
-        'Đặt sân hàng tuần cho CLB bóng đá',
-        'Đặt sân cho giải đấu nội bộ',
-        'Đặt sân cho sự kiện kết nối doanh nghiệp',
-        'Đặt sân tổ chức sinh nhật',
-        'Đặt sân tập luyện thường xuyên'
+        'Đặt sân pickleball cho giải đấu nội bộ công ty',
+        'Đặt sân pickleball đôi cho giải đấu',
+        'Đặt sân pickleball cho nhóm sinh viên',
+        'Đặt sân tập huấn đội pickleball',
+        'Đặt sân hàng tuần cho CLB pickleball Hà Nội',
+        'Đặt sân cho giải đấu pickleball nội bộ',
+        'Đặt sân cho sự kiện kết nối doanh nghiệp qua pickleball',
+        'Đặt sân tổ chức sinh nhật với hoạt động pickleball',
+        'Đặt sân tập luyện pickleball thường xuyên'
     ];
     const numberOfBookings = Math.floor(Math.random() * 51) + 50;
     const bookings = [];
@@ -458,16 +460,16 @@ async function main() {
     }
     console.log('Đã tạo dữ liệu đặt sân');
     const reviewTexts = [
-        'Sân rất tốt, mặt cỏ đẹp, nhân viên thân thiện, sẽ quay lại lần sau',
-        'Sân tốt, phòng thay đồ hơi nhỏ, hệ thống chiếu sáng tốt',
-        'Sân ở mức trung bình, giá hơi cao so với chất lượng',
+        'Sân pickleball rất tốt, mặt sân chất lượng, nhân viên thân thiện, sẽ quay lại lần sau',
+        'Sân pickleball tốt, phòng thay đồ hơi nhỏ, hệ thống chiếu sáng tốt',
+        'Sân pickleball ở mức trung bình, giá hơi cao so với chất lượng',
         'Dịch vụ rất tốt, nhân viên nhiệt tình và thân thiện',
-        'Sân đẹp, sạch sẽ, thích hợp cho các hoạt động thể thao',
-        'Mặt sân chất lượng cao, rất thoải mái khi thi đấu',
+        'Sân pickleball đẹp, sạch sẽ, thích hợp cho mọi trình độ',
+        'Mặt sân chất lượng cao, rất thoải mái khi thi đấu pickleball',
         'Vị trí thuận tiện, dễ dàng tìm kiếm, có bãi đậu xe rộng rãi',
-        'Giá cả hợp lý, chất lượng sân tương xứng với giá tiền',
-        'Đội ngũ nhân viên chuyên nghiệp, luôn hỗ trợ khi cần thiết',
-        'Các thiết bị đầy đủ, mới và sạch sẽ'
+        'Giá cả hợp lý, chất lượng sân pickleball tương xứng với giá tiền',
+        'Đội ngũ huấn luyện viên pickleball chuyên nghiệp, luôn hỗ trợ khi cần thiết',
+        'Sân và vợt pickleball đầy đủ, mới và sạch sẽ'
     ];
     const paidPastBookings = bookings.filter(b => b.status === 'paid' && new Date(b.date) < today);
     const bookingsToReview = paidPastBookings.slice(0, Math.floor(paidPastBookings.length * 0.3));

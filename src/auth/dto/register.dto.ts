@@ -3,7 +3,6 @@ import { IsEmail, IsNotEmpty, IsString, IsOptional, IsMobilePhone, IsDateString 
 import { Role } from '@prisma/client';
 export class RegisterDto {
     @ApiProperty({ example: 'admin@gmail.com' })
-    @IsEmail({}, { message: 'Email không hợp lệ' })
     @IsNotEmpty({ message: 'Username là bắt buộc' })
     username: string;
 
