@@ -24,14 +24,20 @@ let AuthService = class AuthService {
     async register(dto) {
         try {
             const existingUser = await this.prisma.account.findUnique({
-                where: { username: dto.username }
+                where: {
+                    username: dto.username,
+                    deleted: null
+                }
             });
             if (existingUser) {
                 throw new common_1.UnauthorizedException('Username đã được sử dụng');
             }
             if (dto.phone) {
                 const existingPhone = await this.prisma.account.findUnique({
-                    where: { phone: dto.phone }
+                    where: {
+                        phone: dto.phone,
+                        deleted: null
+                    }
                 });
                 if (existingPhone) {
                     throw new common_1.UnauthorizedException('Số điện thoại đã được sử dụng');
@@ -39,7 +45,10 @@ let AuthService = class AuthService {
             }
             if (dto.email) {
                 const existingEmail = await this.prisma.account.findUnique({
-                    where: { email: dto.email }
+                    where: {
+                        email: dto.email,
+                        deleted: null
+                    }
                 });
                 if (existingEmail) {
                     throw new common_1.UnauthorizedException('Email đã được sử dụng');
@@ -75,7 +84,10 @@ let AuthService = class AuthService {
     }
     async login(dto) {
         const user = await this.prisma.account.findUnique({
-            where: { username: dto.username }
+            where: {
+                username: dto.username,
+                deleted: null
+            }
         });
         if (!user) {
             throw new common_1.UnauthorizedException('Tài khoản không tồn tại');

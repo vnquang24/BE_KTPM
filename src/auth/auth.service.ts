@@ -16,7 +16,10 @@ export class AuthService {
     async register(dto: RegisterDto) {
         try {
             const existingUser = await this.prisma.account.findUnique({
-                where: { username: dto.username }
+                where: { 
+                    username: dto.username,
+                    deleted: null
+                }
             });
 
             if (existingUser) {
@@ -25,7 +28,10 @@ export class AuthService {
 
             if (dto.phone) {
                 const existingPhone = await this.prisma.account.findUnique({
-                    where: { phone: dto.phone }
+                    where: { 
+                        phone: dto.phone,
+                        deleted: null
+                    }
                 });
 
                 if (existingPhone) {
@@ -35,7 +41,10 @@ export class AuthService {
 
             if (dto.email) {
                 const existingEmail = await this.prisma.account.findUnique({
-                    where: { email: dto.email }
+                    where: { 
+                        email: dto.email,
+                        deleted: null
+                    }
                 });
 
                 if (existingEmail) {
@@ -83,7 +92,10 @@ export class AuthService {
     async login(dto: LoginDto) {
         // logic to login
         const user = await this.prisma.account.findUnique({
-            where: { username: dto.username }
+            where: { 
+                username: dto.username,
+                deleted: null
+            }
         });
 
         if (!user) {
