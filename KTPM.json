@@ -262,10 +262,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -309,8 +323,6 @@
           "updatedAt",
           "username",
           "password",
-          "phone",
-          "email",
           "role"
         ]
       },
@@ -1007,20 +1019,26 @@
           "phone": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/StringFilter"
+                "$ref": "#/components/schemas/StringNullableFilter"
               },
               {
                 "type": "string"
+              },
+              {
+                "type": "null"
               }
             ]
           },
           "email": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/StringFilter"
+                "$ref": "#/components/schemas/StringNullableFilter"
               },
               {
                 "type": "string"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -1108,10 +1126,24 @@
             "$ref": "#/components/schemas/SortOrder"
           },
           "phone": {
-            "$ref": "#/components/schemas/SortOrder"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SortOrder"
+              },
+              {
+                "$ref": "#/components/schemas/SortOrderInput"
+              }
+            ]
           },
           "email": {
-            "$ref": "#/components/schemas/SortOrder"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SortOrder"
+              },
+              {
+                "$ref": "#/components/schemas/SortOrderInput"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -1141,6 +1173,12 @@
             "type": "string"
           },
           "username": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
             "type": "string"
           },
           "AND": {
@@ -1222,26 +1260,6 @@
             ]
           },
           "password": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/StringFilter"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "phone": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/StringFilter"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "email": {
             "oneOf": [
               {
                 "$ref": "#/components/schemas/StringFilter"
@@ -1417,20 +1435,26 @@
           "phone": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/StringWithAggregatesFilter"
+                "$ref": "#/components/schemas/StringNullableWithAggregatesFilter"
               },
               {
                 "type": "string"
+              },
+              {
+                "type": "null"
               }
             ]
           },
           "email": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/StringWithAggregatesFilter"
+                "$ref": "#/components/schemas/StringNullableWithAggregatesFilter"
               },
               {
                 "type": "string"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -5545,10 +5569,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -5573,9 +5611,7 @@
         },
         "required": [
           "username",
-          "password",
-          "phone",
-          "email"
+          "password"
         ]
       },
       "AccountUpdateInput": {
@@ -5663,7 +5699,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -5673,7 +5712,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -5744,10 +5786,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -5766,9 +5822,7 @@
         },
         "required": [
           "username",
-          "password",
-          "phone",
-          "email"
+          "password"
         ]
       },
       "AccountUpdateManyMutationInput": {
@@ -5856,7 +5910,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -5866,7 +5923,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -8671,6 +8731,84 @@
           }
         }
       },
+      "StringNullableFilter": {
+        "type": "object",
+        "properties": {
+          "equals": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "in": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "notIn": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "lt": {
+            "type": "string"
+          },
+          "lte": {
+            "type": "string"
+          },
+          "gt": {
+            "type": "string"
+          },
+          "gte": {
+            "type": "string"
+          },
+          "contains": {
+            "type": "string"
+          },
+          "startsWith": {
+            "type": "string"
+          },
+          "endsWith": {
+            "type": "string"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/QueryMode"
+          },
+          "not": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/NestedStringNullableFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
       "EnumRoleFilter": {
         "type": "object",
         "properties": {
@@ -8970,178 +9108,6 @@
           }
         }
       },
-      "EnumRoleWithAggregatesFilter": {
-        "type": "object",
-        "properties": {
-          "equals": {
-            "$ref": "#/components/schemas/Role"
-          },
-          "in": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Role"
-            }
-          },
-          "notIn": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Role"
-            }
-          },
-          "not": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/Role"
-              },
-              {
-                "$ref": "#/components/schemas/NestedEnumRoleWithAggregatesFilter"
-              }
-            ]
-          },
-          "_count": {
-            "$ref": "#/components/schemas/NestedIntFilter"
-          },
-          "_min": {
-            "$ref": "#/components/schemas/NestedEnumRoleFilter"
-          },
-          "_max": {
-            "$ref": "#/components/schemas/NestedEnumRoleFilter"
-          }
-        }
-      },
-      "AccountScalarRelationFilter": {
-        "type": "object",
-        "properties": {
-          "is": {
-            "$ref": "#/components/schemas/AccountWhereInput"
-          },
-          "isNot": {
-            "$ref": "#/components/schemas/AccountWhereInput"
-          }
-        }
-      },
-      "BookingListRelationFilter": {
-        "type": "object",
-        "properties": {
-          "every": {
-            "$ref": "#/components/schemas/BookingWhereInput"
-          },
-          "some": {
-            "$ref": "#/components/schemas/BookingWhereInput"
-          },
-          "none": {
-            "$ref": "#/components/schemas/BookingWhereInput"
-          }
-        }
-      },
-      "BookingOrderByRelationAggregateInput": {
-        "type": "object",
-        "properties": {
-          "_count": {
-            "$ref": "#/components/schemas/SortOrder"
-          }
-        }
-      },
-      "StringNullableFilter": {
-        "type": "object",
-        "properties": {
-          "equals": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "in": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "notIn": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "lt": {
-            "type": "string"
-          },
-          "lte": {
-            "type": "string"
-          },
-          "gt": {
-            "type": "string"
-          },
-          "gte": {
-            "type": "string"
-          },
-          "contains": {
-            "type": "string"
-          },
-          "startsWith": {
-            "type": "string"
-          },
-          "endsWith": {
-            "type": "string"
-          },
-          "mode": {
-            "$ref": "#/components/schemas/QueryMode"
-          },
-          "not": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "$ref": "#/components/schemas/NestedStringNullableFilter"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "FieldListRelationFilter": {
-        "type": "object",
-        "properties": {
-          "every": {
-            "$ref": "#/components/schemas/FieldWhereInput"
-          },
-          "some": {
-            "$ref": "#/components/schemas/FieldWhereInput"
-          },
-          "none": {
-            "$ref": "#/components/schemas/FieldWhereInput"
-          }
-        }
-      },
-      "FieldOrderByRelationAggregateInput": {
-        "type": "object",
-        "properties": {
-          "_count": {
-            "$ref": "#/components/schemas/SortOrder"
-          }
-        }
-      },
       "StringNullableWithAggregatesFilter": {
         "type": "object",
         "properties": {
@@ -9226,6 +9192,100 @@
           },
           "_max": {
             "$ref": "#/components/schemas/NestedStringNullableFilter"
+          }
+        }
+      },
+      "EnumRoleWithAggregatesFilter": {
+        "type": "object",
+        "properties": {
+          "equals": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "notIn": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "not": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Role"
+              },
+              {
+                "$ref": "#/components/schemas/NestedEnumRoleWithAggregatesFilter"
+              }
+            ]
+          },
+          "_count": {
+            "$ref": "#/components/schemas/NestedIntFilter"
+          },
+          "_min": {
+            "$ref": "#/components/schemas/NestedEnumRoleFilter"
+          },
+          "_max": {
+            "$ref": "#/components/schemas/NestedEnumRoleFilter"
+          }
+        }
+      },
+      "AccountScalarRelationFilter": {
+        "type": "object",
+        "properties": {
+          "is": {
+            "$ref": "#/components/schemas/AccountWhereInput"
+          },
+          "isNot": {
+            "$ref": "#/components/schemas/AccountWhereInput"
+          }
+        }
+      },
+      "BookingListRelationFilter": {
+        "type": "object",
+        "properties": {
+          "every": {
+            "$ref": "#/components/schemas/BookingWhereInput"
+          },
+          "some": {
+            "$ref": "#/components/schemas/BookingWhereInput"
+          },
+          "none": {
+            "$ref": "#/components/schemas/BookingWhereInput"
+          }
+        }
+      },
+      "BookingOrderByRelationAggregateInput": {
+        "type": "object",
+        "properties": {
+          "_count": {
+            "$ref": "#/components/schemas/SortOrder"
+          }
+        }
+      },
+      "FieldListRelationFilter": {
+        "type": "object",
+        "properties": {
+          "every": {
+            "$ref": "#/components/schemas/FieldWhereInput"
+          },
+          "some": {
+            "$ref": "#/components/schemas/FieldWhereInput"
+          },
+          "none": {
+            "$ref": "#/components/schemas/FieldWhereInput"
+          }
+        }
+      },
+      "FieldOrderByRelationAggregateInput": {
+        "type": "object",
+        "properties": {
+          "_count": {
+            "$ref": "#/components/schemas/SortOrder"
           }
         }
       },
@@ -9883,6 +9943,21 @@
               {
                 "type": "string",
                 "format": "date-time"
+              }
+            ]
+          }
+        }
+      },
+      "NullableStringFieldUpdateOperationsInput": {
+        "type": "object",
+        "properties": {
+          "set": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
               }
             ]
           }
@@ -10716,21 +10791,6 @@
                 "items": {
                   "$ref": "#/components/schemas/FieldWhereUniqueInput"
                 }
-              }
-            ]
-          }
-        }
-      },
-      "NullableStringFieldUpdateOperationsInput": {
-        "type": "object",
-        "properties": {
-          "set": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "string"
               }
             ]
           }
@@ -13492,6 +13552,81 @@
           }
         }
       },
+      "NestedStringNullableFilter": {
+        "type": "object",
+        "properties": {
+          "equals": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "in": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "notIn": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "lt": {
+            "type": "string"
+          },
+          "lte": {
+            "type": "string"
+          },
+          "gt": {
+            "type": "string"
+          },
+          "gte": {
+            "type": "string"
+          },
+          "contains": {
+            "type": "string"
+          },
+          "startsWith": {
+            "type": "string"
+          },
+          "endsWith": {
+            "type": "string"
+          },
+          "not": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/components/schemas/NestedStringNullableFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
       "NestedEnumRoleFilter": {
         "type": "object",
         "properties": {
@@ -13832,120 +13967,6 @@
           }
         }
       },
-      "NestedEnumRoleWithAggregatesFilter": {
-        "type": "object",
-        "properties": {
-          "equals": {
-            "$ref": "#/components/schemas/Role"
-          },
-          "in": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Role"
-            }
-          },
-          "notIn": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Role"
-            }
-          },
-          "not": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/Role"
-              },
-              {
-                "$ref": "#/components/schemas/NestedEnumRoleWithAggregatesFilter"
-              }
-            ]
-          },
-          "_count": {
-            "$ref": "#/components/schemas/NestedIntFilter"
-          },
-          "_min": {
-            "$ref": "#/components/schemas/NestedEnumRoleFilter"
-          },
-          "_max": {
-            "$ref": "#/components/schemas/NestedEnumRoleFilter"
-          }
-        }
-      },
-      "NestedStringNullableFilter": {
-        "type": "object",
-        "properties": {
-          "equals": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "in": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "notIn": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            ]
-          },
-          "lt": {
-            "type": "string"
-          },
-          "lte": {
-            "type": "string"
-          },
-          "gt": {
-            "type": "string"
-          },
-          "gte": {
-            "type": "string"
-          },
-          "contains": {
-            "type": "string"
-          },
-          "startsWith": {
-            "type": "string"
-          },
-          "endsWith": {
-            "type": "string"
-          },
-          "not": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "$ref": "#/components/schemas/NestedStringNullableFilter"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
       "NestedStringNullableWithAggregatesFilter": {
         "type": "object",
         "properties": {
@@ -14027,6 +14048,45 @@
           },
           "_max": {
             "$ref": "#/components/schemas/NestedStringNullableFilter"
+          }
+        }
+      },
+      "NestedEnumRoleWithAggregatesFilter": {
+        "type": "object",
+        "properties": {
+          "equals": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "in": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "notIn": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "not": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Role"
+              },
+              {
+                "$ref": "#/components/schemas/NestedEnumRoleWithAggregatesFilter"
+              }
+            ]
+          },
+          "_count": {
+            "$ref": "#/components/schemas/NestedIntFilter"
+          },
+          "_min": {
+            "$ref": "#/components/schemas/NestedEnumRoleFilter"
+          },
+          "_max": {
+            "$ref": "#/components/schemas/NestedEnumRoleFilter"
           }
         }
       },
@@ -14988,10 +15048,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -15013,9 +15087,7 @@
         },
         "required": [
           "username",
-          "password",
-          "phone",
-          "email"
+          "password"
         ]
       },
       "AccountUncheckedCreateWithoutCustomUserInput": {
@@ -15053,10 +15125,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -15078,9 +15164,7 @@
         },
         "required": [
           "username",
-          "password",
-          "phone",
-          "email"
+          "password"
         ]
       },
       "AccountCreateOrConnectWithoutCustomUserInput": {
@@ -15455,7 +15539,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -15465,7 +15552,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -15583,7 +15673,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -15593,7 +15686,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -15931,10 +16027,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -15956,9 +16066,7 @@
         },
         "required": [
           "username",
-          "password",
-          "phone",
-          "email"
+          "password"
         ]
       },
       "AccountUncheckedCreateWithoutOwnerInput": {
@@ -15996,10 +16104,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -16021,9 +16143,7 @@
         },
         "required": [
           "username",
-          "password",
-          "phone",
-          "email"
+          "password"
         ]
       },
       "AccountCreateOrConnectWithoutOwnerInput": {
@@ -16356,7 +16476,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -16366,7 +16489,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -16484,7 +16610,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -16494,7 +16623,10 @@
                 "type": "string"
               },
               {
-                "$ref": "#/components/schemas/StringFieldUpdateOperationsInput"
+                "$ref": "#/components/schemas/NullableStringFieldUpdateOperationsInput"
+              },
+              {
+                "type": "null"
               }
             ]
           },
@@ -26179,10 +26311,24 @@
             "type": "string"
           },
           "phone": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "email": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "dateOfBirth": {
             "oneOf": [
@@ -26236,8 +26382,6 @@
           "updatedAt",
           "username",
           "password",
-          "phone",
-          "email",
           "role"
         ]
       },

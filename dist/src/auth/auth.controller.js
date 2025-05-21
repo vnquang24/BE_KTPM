@@ -43,8 +43,7 @@ __decorate([
         schema: {
             type: 'object',
             properties: {
-                accessToken: { type: 'string' },
-                refreshToken: { type: 'string' }
+                message: { type: 'string' }
             }
         }
     }),
@@ -65,8 +64,7 @@ __decorate([
         schema: {
             type: 'object',
             properties: {
-                accessToken: { type: 'string' },
-                refreshToken: { type: 'string' }
+                message: { type: 'string' }
             }
         }
     }),

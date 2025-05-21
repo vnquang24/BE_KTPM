@@ -20,8 +20,7 @@ export class AuthController {
         schema: {
             type: 'object',
             properties: {
-                accessToken: { type: 'string' },
-                refreshToken: { type: 'string' }
+                message: { type: 'string' }
             }
         }
     })
@@ -40,8 +39,7 @@ export class AuthController {
         schema: {
             type: 'object',
             properties: {
-                accessToken: { type: 'string' },
-                refreshToken: { type: 'string' }
+                message: { type: 'string' }
             }
         }
     })

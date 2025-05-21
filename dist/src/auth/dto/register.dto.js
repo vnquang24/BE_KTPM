@@ -19,7 +19,6 @@ class RegisterDto {
     phone;
     email;
     dateOfBirth;
-    name;
     role;
 }
 exports.RegisterDto = RegisterDto;
@@ -52,12 +51,6 @@ __decorate([
     (0, class_validator_1.IsDateString)({}, { message: 'Ngày sinh không hợp lệ' }),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "dateOfBirth", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 'Nguyễn Văn A' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: 'Tên là bắt buộc' }),
-    __metadata("design:type", String)
-], RegisterDto.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 'Owner' }),
     (0, class_validator_1.IsString)(),

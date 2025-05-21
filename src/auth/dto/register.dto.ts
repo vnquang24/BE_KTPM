@@ -26,11 +26,6 @@ export class RegisterDto {
     @IsDateString({}, { message: 'Ngày sinh không hợp lệ' })
     dateOfBirth: string;
 
-    @ApiProperty({ example: 'Nguyễn Văn A' })
-    @IsString()
-    @IsNotEmpty({message: 'Tên là bắt buộc'})
-    name: string;
-
     @ApiProperty({ example: 'Owner' })
     @IsString()
     @IsNotEmpty({message: 'Role là bắt buộc'})

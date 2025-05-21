@@ -5,6 +5,5 @@ export declare class RegisterDto {
     phone: string;
     email: string;
     dateOfBirth: string;
-    name: string;
     role: Role;
 }

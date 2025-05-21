@@ -13,8 +13,8 @@ export declare class AuthController {
             updatedAt: Date;
             deleted: Date | null;
             username: string;
-            phone: string;
-            email: string;
+            phone: string | null;
+            email: string | null;
             dateOfBirth: Date | null;
             role: import(".prisma/client").$Enums.Role;
         };
@@ -28,8 +28,8 @@ export declare class AuthController {
             updatedAt: Date;
             deleted: Date | null;
             username: string;
-            phone: string;
-            email: string;
+            phone: string | null;
+            email: string | null;
             dateOfBirth: Date | null;
             role: import(".prisma/client").$Enums.Role;
         };
