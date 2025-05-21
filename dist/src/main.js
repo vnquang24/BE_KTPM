@@ -65,7 +65,7 @@ async function bootstrap() {
     catch (error) {
         console.log('No generated OpenAPI document found');
     }
-    const port = process.env.PORT || 8000;
+    const port = 8000;
     await app.listen(port);
     console.log(`Application is running on: ${await app.getUrl()}`);
     console.log(`Swagger documentation: ${await app.getUrl()}/docs/swagger`);

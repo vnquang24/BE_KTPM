@@ -14,7 +14,6 @@ import type { Request } from "express";
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    
     AuthModule,
     UsersModule,
     ZenStackModule.registerAsync({

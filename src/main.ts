@@ -20,7 +20,12 @@ async function bootstrap() {
   dotenv.config();
   
   // Cấu hình cơ bản
-  app.enableCors();
+  app.enableCors({
+    origin: ['http://localhost:3000/'], // Cho phép các domain cụ thể
+    credentials: true, // Cho phép gửi cookie qua cross-origin requests
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Các phương thức cho phép
+    allowedHeaders: 'Content-Type,Authorization', // Các header cho phép
+  });
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableShutdownHooks();
@@ -51,12 +56,10 @@ async function bootstrap() {
   // Tạo phiên bản sạch không có tham chiếu vòng tròn
   const cleanDocument = JSON.parse(JSON.stringify(document));
   
-  // Endpoint để truy cập file JSON
   app.use('/api-docs-json', (req, res) => {
     res.json(cleanDocument);
   });
   
-  // Cấu hình Swagger UI truyền thống
   SwaggerModule.setup('docs/swagger', app, cleanDocument, {
     swaggerOptions: {
       persistAuthorization: true,
@@ -65,7 +68,6 @@ async function bootstrap() {
     },
   });
   
-  // Cấu hình Scalar API Reference (giao diện hiện đại)
   app.use(
     '/docs',
     apiReference({ 
@@ -98,7 +100,7 @@ async function bootstrap() {
   }
   
   // Khởi động server
-  const port = process.env.PORT || 8000;
+  const port = 8000;
   await app.listen(port);
   
   // Log thông tin
