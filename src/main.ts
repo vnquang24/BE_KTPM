@@ -21,10 +21,10 @@ async function bootstrap() {
   
   // Cấu hình cơ bản
   app.enableCors({
-    origin: ['http://localhost:3000/'], // Cho phép các domain cụ thể
-    credentials: true, // Cho phép gửi cookie qua cross-origin requests
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Các phương thức cho phép
-    allowedHeaders: 'Content-Type,Authorization', // Các header cho phép
+    origin: 'https://ktpm-fe-k7zv.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Authorization',
   });
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
