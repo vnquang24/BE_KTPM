@@ -7,7 +7,6 @@ import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from './middleware/http';
 import * as dotenv from 'dotenv';
 
-// Hỗ trợ BigInt trong JSON
 // @ts-ignore
 BigInt.prototype.toJSON = function () {
   const int = Number.parseInt(this.toString());
@@ -15,11 +14,8 @@ BigInt.prototype.toJSON = function () {
 };
 
 async function bootstrap() {
-  // Tạo NestJS application
   const app = await NestFactory.create(AppModule);
   dotenv.config();
-  
-  // Cấu hình cơ bản
   app.enableCors({
     origin: process.env.FE_URL,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

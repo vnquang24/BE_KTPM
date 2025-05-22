@@ -3,41 +3,26 @@ import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-// Hàm tạo ngày ngẫu nhiên trong khoảng
 function randomDate(start: Date, end: Date): Date {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
-// Hàm tạo số điện thoại ngẫu nhiên
 function generateRandomPhone(): string {
   return '09' + Math.floor(10000000 + Math.random() * 90000000).toString();
 }
 
-// Hàm tạo email ngẫu nhiên
 function generateRandomEmail(username: string): string {
   const domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'example.com'];
   const randomDomain = domains[Math.floor(Math.random() * domains.length)];
   return `${username}@${randomDomain}`;
 }
 
-// Hàm lấy phần tử ngẫu nhiên từ mảng
 function getRandomItem<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-// Hàm tạo mảng ngẫu nhiên các chỉ số không trùng nhau
-function getRandomIndices(max: number, count: number): number[] {
-  const indices = Array.from({ length: max }, (_, i) => i);
-  // Thuật toán Fisher-Yates shuffle
-  for (let i = max - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
-  }
-  return indices.slice(0, count);
-}
 
 async function main() {
-  // Xóa dữ liệu hiện có
   await prisma.review.deleteMany();
   await prisma.booking.deleteMany();
   await prisma.maintenanceSchedule.deleteMany();
@@ -50,18 +35,15 @@ async function main() {
 
   console.log('Đã xóa dữ liệu hiện có');
 
-  // Tạo dữ liệu người dùng với mật khẩu đã được băm
   const saltRounds = 10;
   const startDate = new Date('1980-01-01');
   const endDate = new Date('2000-12-31');
 
-  // Mảng lưu trữ các tài khoản đã tạo
   const adminAccounts: any[] = [];
   const ownerAccounts: any[] = [];
   const customerAccounts: any[] = [];
   const allAccounts: any[] = [];
   
-  // Tạo tài khoản admin (3 tài khoản)
   for (let i = 1; i <= 3; i++) {
     const username = `admin${i}`;
     const adminAccount = await prisma.account.create({
@@ -81,7 +63,6 @@ async function main() {
 
   console.log('Đã tạo tài khoản admin');
 
-  // Tạo tài khoản chủ sân (10 chủ sân)
   for (let i = 1; i <= 10; i++) {
     const username = `owner${i}`;
     const ownerAccount = await prisma.account.create({
@@ -99,7 +80,6 @@ async function main() {
     allAccounts.push(ownerAccount);
   }
 
-  // Tạo tài khoản người dùng (30 khách hàng)
   const userDescriptions = [
     'Khách hàng thường xuyên',
     'Khách hàng mới',
@@ -132,7 +112,6 @@ async function main() {
 
   console.log('Đã tạo các tài khoản');
 
-  // Tạo dữ liệu chủ sân
   const ownerRankings = ['Gold', 'Silver', 'Platinum', 'Diamond', 'Standard'];
   const ownerDescriptions = [
     'Chủ sân pickleball hạng Gold với nhiều đánh giá tốt',
@@ -161,7 +140,6 @@ async function main() {
 
   console.log('Đã tạo dữ liệu chủ sân');
 
-  // Tạo dữ liệu khách hàng
   const customerDescriptions = [
     'Khách hàng thường xuyên đặt sân pickleball',
     'Khách hàng mới, chưa có lịch sử đặt sân',
@@ -188,7 +166,6 @@ async function main() {
 
   console.log('Đã tạo dữ liệu khách hàng');
 
-  // Tạo dữ liệu sân
   const fieldRankings = ['Premium', 'Standard', 'Economy', 'Platinum', 'Diamond', 'Gold', 'Silver'];
   const fieldLocations = [
     'Số 123 Đường Trần Duy Hưng, Quận Cầu Giấy, Hà Nội',
@@ -226,21 +203,17 @@ async function main() {
     'Sân pickleball ngoài trời, phục vụ các đội từ phong trào đến chuyên nghiệp'
   ];
 
-  // Tạo khoảng 20-25 sân
   const numberOfFields = Math.floor(Math.random() * 6) + 20; // 20-25 sân
   const fields: any[] = [];
   
-  // Chọn ngẫu nhiên vị trí địa điểm không trùng nhau cho các sân
   const randomLocations = [...fieldLocations];
   for (let i = 0; i < numberOfFields; i++) {
-    // Đảm bảo mỗi chủ sân có ít nhất 1 sân
     const ownerIndex = i < owners.length ? i : Math.floor(Math.random() * owners.length);
     
-    // Chọn ngẫu nhiên vị trí sân
     const locationIndex = Math.floor(Math.random() * randomLocations.length);
     const location = randomLocations.splice(locationIndex, 1)[0]; // Lấy và xóa vị trí đã chọn
     
-    if (!location) break; // Nếu hết địa điểm thì dừng
+    if (!location) break; 
     
     const field = await prisma.field.create({
       data: {
@@ -255,7 +228,6 @@ async function main() {
 
   console.log('Đã tạo dữ liệu sân');
 
-  // Khai báo các biến ngày tháng sử dụng trong cả seed (di chuyển lên trước để tránh lỗi sử dụng trước khi khai báo)
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -269,11 +241,8 @@ async function main() {
   const lastWeek = new Date(today);
   lastWeek.setDate(lastWeek.getDate() - 7);
 
-  // Tạo dữ liệu sân con
   const subfieldRankings = ['Premium', 'Standard', 'Economy', 'Platinum', 'Diamond', 'Gold', 'Silver'];
   const prices = [200000, 250000, 300000, 350000, 400000, 450000, 500000, 550000, 600000];
-  // Cần sử dụng chính xác các giá trị enum từ schema.prisma (chữ viết hoa)
-  const statuses = ['AVAILABLE', 'MAINTENANCE', 'CLOSED', 'RESERVED'] as const;
   
   const subfieldDescriptions = [
     'Sân pickleball đơn, mặt sân cao cấp, có hệ thống làm mát',
@@ -313,23 +282,20 @@ async function main() {
 
   const subfields: any[] = [];
   
-  // Tạo 2-5 sân con cho mỗi sân
   for (const field of fields) {
-    // Số lượng sân con từ 2-5 cho mỗi sân
     const numberOfSubfields = Math.floor(Math.random() * 4) + 2;
     
     for (let i = 0; i < numberOfSubfields; i++) {
-      // Tạo ngẫu nhiên trạng thái trong số các trạng thái có sẵn
       let randomStatus;
       const statusRandom = Math.random();
       if (statusRandom < 0.7) {
-        randomStatus = 'AVAILABLE'; // 70% là AVAILABLE
+        randomStatus = 'AVAILABLE'; 
       } else if (statusRandom < 0.85) {
-        randomStatus = 'MAINTENANCE'; // 15% là MAINTENANCE
+        randomStatus = 'MAINTENANCE'; 
       } else if (statusRandom < 0.95) {
-        randomStatus = 'CLOSED'; // 10% là CLOSED
+        randomStatus = 'CLOSED'; 
       } else {
-        randomStatus = 'RESERVED'; // 5% là RESERVED
+        randomStatus = 'RESERVED'; 
       }
 
       const subfield = await prisma.subField.create({
@@ -337,7 +303,7 @@ async function main() {
           ranking: getRandomItem(subfieldRankings),
           price: getRandomItem(prices),
           status: randomStatus,
-          haveToPayFirst: Math.random() > 0.5, // 50% khả năng yêu cầu thanh toán trước
+          haveToPayFirst: Math.random() > 0.5, 
           description: getRandomItem(subfieldDescriptions),
           fieldId: field.id,
           subfieldDescription: `${getRandomItem(subfieldNames)} - ${i + 1}`,
@@ -350,17 +316,13 @@ async function main() {
 
   console.log('Đã tạo dữ liệu sân con');
 
-  // Tạo dữ liệu thời gian mở cửa (OpeningHours)
-  // Sử dụng đúng kiểu DayOfWeek từ schema
+  
   const daysOfWeek = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'] as const;
   const openingTimes = ['06:00', '07:00', '08:00', '09:00'];
   const closingTimes = ['20:00', '21:00', '22:00', '23:00'];
 
-  // Tạo dữ liệu thời gian mở cửa cho mỗi sân
   for (const field of fields) {
-    // Tạo lịch mở cửa cho cả 7 ngày trong tuần
     for (const day of daysOfWeek) {
-      // Ngày chủ nhật có thể mở cửa muộn hơn và đóng sớm hơn
       let openTime, closeTime;
       if (day === 'SUNDAY') {
         openTime = getRandomItem(['08:00', '09:00', '10:00']);
@@ -370,7 +332,6 @@ async function main() {
         closeTime = getRandomItem(closingTimes);
       }
 
-      // Có xác suất 10% sân sẽ đóng cửa vào một ngày nào đó
       const isOpen = Math.random() > 0.1;
 
       await prisma.openingHours.create({
@@ -388,7 +349,6 @@ async function main() {
 
   console.log('Đã tạo dữ liệu thời gian mở cửa');
 
-  // Tạo dữ liệu lịch bảo trì (MaintenanceSchedule)
   const maintenanceStatuses = ['scheduled', 'in-progress', 'completed', 'cancelled'];
   const maintenanceReasons = [
     'Bảo trì định kỳ mặt sân pickleball',
@@ -401,16 +361,12 @@ async function main() {
     'Kiểm tra an toàn và tiêu chuẩn thi đấu'  
   ];
 
-  // Lọc các sân con đang trong trạng thái bảo trì
   const maintenanceSubfields = subfields.filter(sf => sf.status === 'MAINTENANCE');
   
-  // Tạo lịch bảo trì cho những sân đang trong trạng thái bảo trì
   for (const subfield of maintenanceSubfields) {
-    // Ngày bắt đầu bảo trì từ 1-15 ngày trước
     const startDate = new Date(today);
     startDate.setDate(startDate.getDate() - Math.floor(Math.random() * 15) - 1);
     
-    // Bảo trì kéo dài 1-30 ngày
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + Math.floor(Math.random() * 30) + 1);
     
@@ -426,7 +382,6 @@ async function main() {
     });
   }
   
-  // Tạo thêm một số lịch bảo trì đã hoàn thành cho các sân hiện đang hoạt động
   const subfieldsByStatus = subfields.reduce((acc, sf) => {
     if (!acc[sf.status]) acc[sf.status] = [];
     acc[sf.status].push(sf);
@@ -435,16 +390,13 @@ async function main() {
   
   const readySubfields = subfieldsByStatus['AVAILABLE'] || [];
   
-  // Chọn ngẫu nhiên 30% số sân để tạo lịch bảo trì đã hoàn thành
   const completedMaintenanceCount = Math.floor(readySubfields.length * 0.3);
   const subfieldsForCompletedMaintenance = readySubfields.slice(0, completedMaintenanceCount);
   
   for (const subfield of subfieldsForCompletedMaintenance) {
-    // Bảo trì đã kết thúc 1-60 ngày trước
     const endDate = new Date(today);
     endDate.setDate(endDate.getDate() - Math.floor(Math.random() * 60) - 1);
     
-    // Bảo trì kéo dài 1-10 ngày
     const startDate = new Date(endDate);
     startDate.setDate(startDate.getDate() - Math.floor(Math.random() * 10) - 1);
     
@@ -460,16 +412,13 @@ async function main() {
     });
   }
   
-  // Tạo thêm một số lịch bảo trì dự kiến trong tương lai
   const futureMaintenanceCount = Math.floor(readySubfields.length * 0.2);
   const subfieldsForFutureMaintenance = readySubfields.slice(completedMaintenanceCount, completedMaintenanceCount + futureMaintenanceCount);
   
   for (const subfield of subfieldsForFutureMaintenance) {
-    // Bảo trì dự kiến bắt đầu 1-30 ngày từ hôm nay
     const startDate = new Date(today);
     startDate.setDate(startDate.getDate() + Math.floor(Math.random() * 30) + 1);
     
-    // Bảo trì dự kiến kéo dài 1-15 ngày
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + Math.floor(Math.random() * 15) + 1);
     
@@ -487,9 +436,7 @@ async function main() {
 
   console.log('Đã tạo dữ liệu lịch bảo trì');
 
-  // Tạo dữ liệu đặt sân
   
-  const bookingStatuses = ['pending', 'paid', 'cancel'];
   const paymentMethods = ['banking', 'cash', 'momo', 'zalo pay', 'credit card'];
   const bookingDescriptions = [
     'Đặt sân pickleball cho đội công ty',
@@ -507,15 +454,12 @@ async function main() {
     'Đặt sân tập luyện pickleball thường xuyên'
   ];
   
-  // Tạo ngẫu nhiên khoảng 50-100 booking
   const numberOfBookings = Math.floor(Math.random() * 51) + 50; // 50-100 bookings
   const bookings: any[] = [];
   
-  // Chọn ngẫu nhiên các sân con có trạng thái AVAILABLE
   const availableSubfields = subfields.filter(sf => sf.status === 'AVAILABLE');
   
   for (let i = 0; i < numberOfBookings; i++) {
-    // Chọn ngẫu nhiên ngày đặt sân (trong khoảng từ 2 tuần trước đến 2 tuần sau)
     const twoWeeksAgo = new Date(today);
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
     
@@ -524,9 +468,8 @@ async function main() {
     
     const bookingDate = randomDate(twoWeeksAgo, twoWeeksLater);
     
-    // Tạo ngẫu nhiên giờ bắt đầu và kết thúc (giờ bắt đầu từ 6h-20h, thời gian đặt từ 1-3 giờ)
-    const startHour = Math.floor(Math.random() * 15) + 6; // 6h-20h
-    const duration = Math.floor(Math.random() * 3) + 1; // 1-3 giờ
+    const startHour = Math.floor(Math.random() * 15) + 6; 
+    const duration = Math.floor(Math.random() * 3) + 1; 
     
     const beginTime = new Date(bookingDate);
     beginTime.setHours(startHour, 0, 0);
@@ -534,11 +477,9 @@ async function main() {
     const endTime = new Date(bookingDate);
     endTime.setHours(startHour + duration, 0, 0);
     
-    // Chọn ngẫu nhiên khách hàng và sân con
     const customer = getRandomItem(customers);
     const subfield = getRandomItem(availableSubfields);
     
-    // Xác định trạng thái booking: tỷ lệ 60% paid, 30% pending, 10% cancel
     let status: string;
     const rand = Math.random();
     if (rand < 0.6) {
@@ -549,19 +490,16 @@ async function main() {
       status = 'cancel';
     }
     
-    // Nếu status là paid, tạo ngày thanh toán và phương thức thanh toán
     let payDate: Date | undefined;
     let paymentMethod: string | undefined;
     
     if (status === 'paid') {
-      // Ngày thanh toán trước ngày đặt sân
       const paymentDate = new Date(bookingDate);
       paymentDate.setDate(paymentDate.getDate() - Math.floor(Math.random() * 3)); // 0-2 ngày trước
       payDate = paymentDate;
       paymentMethod = getRandomItem(paymentMethods);
     }
     
-    // Giá phụ thuộc vào sân con và thời gian đặt
     const price = subfield.price * duration;
     
     const booking = await prisma.booking.create({
@@ -584,7 +522,6 @@ async function main() {
 
   console.log('Đã tạo dữ liệu đặt sân');
 
-  // Tạo dữ liệu đánh giá
   const reviewTexts = [
     'Sân pickleball rất tốt, mặt sân chất lượng, nhân viên thân thiện, sẽ quay lại lần sau',
     'Sân pickleball tốt, phòng thay đồ hơi nhỏ, hệ thống chiếu sáng tốt',
@@ -598,20 +535,16 @@ async function main() {
     'Sân và vợt pickleball đầy đủ, mới và sạch sẽ'
   ];
   
-  // Tạo đánh giá cho khoảng 30% số booking đã thanh toán và trong quá khứ
   const paidPastBookings = bookings.filter(b => 
     b.status === 'paid' && new Date(b.date) < today
   );
   
-  // Chọn ngẫu nhiên 30% số booking đã thanh toán để đánh giá
   const bookingsToReview = paidPastBookings.slice(0, Math.floor(paidPastBookings.length * 0.3));
   
   for (const booking of bookingsToReview) {
-    // Tạo ngày đánh giá sau ngày đặt sân 0-2 ngày
     const reviewDate = new Date(booking.date);
     reviewDate.setDate(reviewDate.getDate() + Math.floor(Math.random() * 3));
     
-    // Đánh giá từ 3-5 sao (phần lớn là đánh giá tốt)
     const rating = Math.floor(Math.random() * 3) + 3; // 3-5 sao
     
     await prisma.review.create({

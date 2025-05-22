@@ -15,10 +15,8 @@ export class CrudMiddleware implements NestMiddleware {
         console.log('\n📢 CrudMiddleware - Request path:', req.path);
         console.log('⚠️ BỎ QUA BẢO MẬT - Sử dụng Prisma trực tiếp');
         
-        // Sử dụng middleware ZenStack nhưng trả về Prisma client nguyên bản
         const inner = ZenStackMiddleware({
             getPrisma: () => {
-                // Trả về prisma client trực tiếp không qua enhance
                 return this.prismaService;
             },
         });

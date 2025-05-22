@@ -9,7 +9,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
     const exceptionResponse = exception.getResponse() as any;
 
-    // Tạo response chuẩn
     const errorResponse = {
       statusCode: status,
       message: exceptionResponse.message || exception.message,

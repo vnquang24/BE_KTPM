@@ -38,17 +38,13 @@ export class PrismaService
     }
 
     async onModuleInit() {
-        // Chỉ log query chi tiết trong môi trường development
         if (this.isDevelopment) {
             this.$on("query", (e) => {
-                // Format thời gian thực thi query
                 const executionTime = e.duration ? 
                     `${Math.round(e.duration)}ms` : 'N/A';
                 
-                // Format query để dễ đọc
                 const formattedQuery = this.formatSql(e.query);
                 
-                // Log với màu sắc và định dạng
                 console.log('\n');
                 console.log('----------------------------------------');
                 console.log(`🔍 ${chalk.blue('PRISMA QUERY')}`);
@@ -56,7 +52,6 @@ export class PrismaService
                 console.log('----------------------------------------');
                 console.log(chalk.green(formattedQuery));
                 
-                // Log params nếu có
                 if (e.params && e.params !== '[]') {
                     try {
                         const params = JSON.parse(e.params);
@@ -70,17 +65,14 @@ export class PrismaService
             });
         }
 
-        // Log lỗi kết nối - sửa từ 'error' thành 'error' như một loại event
         this.$on("error", (e) => {
             this.logger.error(`❌ Database error: ${e.message}`, e.target);
         });
         
-        // Log thông tin
         this.$on("info", (e) => {
             this.logger.log(`ℹ️ ${e.message}`, e.target);
         });
         
-        // Log cảnh báo
         this.$on("warn", (e) => {
             this.logger.warn(`⚠️ ${e.message}`, e.target);
         });

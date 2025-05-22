@@ -22,7 +22,6 @@ import type { Request } from "express";
         console.log('Bỏ qua bảo mật - truy cập trực tiếp vào Prisma client');
         console.log('============================');
         return {
-          // Trả về Prisma client trực tiếp không qua enhance
           getEnhancedPrisma: () => prisma,
         };
       },

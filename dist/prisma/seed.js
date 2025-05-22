@@ -17,14 +17,6 @@ function generateRandomEmail(username) {
 function getRandomItem(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
-function getRandomIndices(max, count) {
-    const indices = Array.from({ length: max }, (_, i) => i);
-    for (let i = max - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [indices[i], indices[j]] = [indices[j], indices[i]];
-    }
-    return indices.slice(0, count);
-}
 async function main() {
     await prisma.review.deleteMany();
     await prisma.booking.deleteMany();
@@ -219,7 +211,6 @@ async function main() {
     lastWeek.setDate(lastWeek.getDate() - 7);
     const subfieldRankings = ['Premium', 'Standard', 'Economy', 'Platinum', 'Diamond', 'Gold', 'Silver'];
     const prices = [200000, 250000, 300000, 350000, 400000, 450000, 500000, 550000, 600000];
-    const statuses = ['AVAILABLE', 'MAINTENANCE', 'CLOSED', 'RESERVED'];
     const subfieldDescriptions = [
         'Sân pickleball đơn, mặt sân cao cấp, có hệ thống làm mát',
         'Sân pickleball đôi, mặt sân cao cấp, có hệ thống làm mát',
@@ -388,7 +379,6 @@ async function main() {
         });
     }
     console.log('Đã tạo dữ liệu lịch bảo trì');
-    const bookingStatuses = ['pending', 'paid', 'cancel'];
     const paymentMethods = ['banking', 'cash', 'momo', 'zalo pay', 'credit card'];
     const bookingDescriptions = [
         'Đặt sân pickleball cho đội công ty',

@@ -52,11 +52,9 @@ export class AuthService {
                 }
             }
 
-            // Mã hóa mật khẩu
             const saltRounds = parseInt(this.configService.get<string>('BCRYPT_SALT_ROUNDS') || '10', 10);
             const hashedPassword = await bcrypt.hash(dto.password, saltRounds);
 
-            // Tạo người dùng mới
             const user = await this.prisma.account.create({
                 data: {
                     username: dto.username,
@@ -68,7 +66,6 @@ export class AuthService {
                 }
             });
 
-            // Trả về thông tin người dùng và token (không bao gồm password)
             const { password, ...userWithoutPassword } = user;
             return {
                 message: 'Đăng ký tài khoản thành công',
@@ -79,18 +76,15 @@ export class AuthService {
                 throw error; // Rethrow nếu là lỗi đã xử lý
             }
 
-            // Xử lý lỗi Prisma
             if (error.code === 'P2002') {
                 throw new UnauthorizedException('Username, email hoặc số điện thoại đã được sử dụng');
             }
 
-            // Xử lý các lỗi khác
             throw new Error('Đã xảy ra lỗi khi đăng ký: ' + error.message);
         }
     }
 
     async login(dto: LoginDto) {
-        // logic to login
         const user = await this.prisma.account.findUnique({
             where: { 
                 username: dto.username,
@@ -108,7 +102,6 @@ export class AuthService {
             throw new UnauthorizedException('Mật khẩu không đúng');
         }
 
-        // Trả về thông tin người dùng không bao gồm password
         const { password, ...userWithoutPassword } = user;
         return {
             message: 'Đăng nhập thành công',
