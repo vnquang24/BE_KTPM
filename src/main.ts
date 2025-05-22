@@ -21,7 +21,7 @@ async function bootstrap() {
   
   // Cấu hình cơ bản
   app.enableCors({
-    origin: 'https://ktpm-fe-k7zv.vercel.app',
+    origin: process.env.FE_URL,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
     allowedHeaders: 'Content-Type, Accept, Authorization',
