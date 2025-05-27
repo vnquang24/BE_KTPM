@@ -19,8 +19,6 @@ let CrudMiddleware = class CrudMiddleware {
         this.prismaService = prismaService;
     }
     async use(req, _res, next) {
-        console.log('\n📢 CrudMiddleware - Request path:', req.path);
-        console.log('⚠️ BỎ QUA BẢO MẬT - Sử dụng Prisma trực tiếp');
         const inner = (0, express_1.ZenStackMiddleware)({
             getPrisma: () => {
                 return this.prismaService;

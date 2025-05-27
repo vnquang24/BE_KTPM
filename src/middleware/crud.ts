@@ -12,9 +12,6 @@ export class CrudMiddleware implements NestMiddleware {
     ) { }
 
     async use(req: Request, _res: Response, next: (error?) => void) {
-        console.log('\n📢 CrudMiddleware - Request path:', req.path);
-        console.log('⚠️ BỎ QUA BẢO MẬT - Sử dụng Prisma trực tiếp');
-        
         const inner = ZenStackMiddleware({
             getPrisma: () => {
                 return this.prismaService;

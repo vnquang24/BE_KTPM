@@ -30,9 +30,6 @@ exports.AppModule = AppModule = __decorate([
             users_module_1.UsersModule,
             nestjs_1.ZenStackModule.registerAsync({
                 useFactory: (request, prisma) => {
-                    console.log('=== Prisma Direct Access ===');
-                    console.log('Bỏ qua bảo mật - truy cập trực tiếp vào Prisma client');
-                    console.log('============================');
                     return {
                         getEnhancedPrisma: () => prisma,
                     };

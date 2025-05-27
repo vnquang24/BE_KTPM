@@ -18,9 +18,6 @@ import type { Request } from "express";
     UsersModule,
     ZenStackModule.registerAsync({
       useFactory: (request: Request, prisma: PrismaService) => {
-        console.log('=== Prisma Direct Access ===');
-        console.log('Bỏ qua bảo mật - truy cập trực tiếp vào Prisma client');
-        console.log('============================');
         return {
           getEnhancedPrisma: () => prisma,
         };
